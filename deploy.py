@@ -1,39 +1,59 @@
-from flask import Flask, render_template, request, send_file
+import streamlit as st
+import numpy as np
 import pandas as pd
 import joblib
 
-app = Flask(__name__)
+# Load model & scaler
+model = joblib.load("logistic_model.pkl")
+scaler = joblib.load("scaler.pkl")
 
-# Load model, scaler, selector
-model = joblib.load('logistic_model.pkl')
-scaler = joblib.load('scaler.pkl')
-selector = joblib.load('selector.pkl')
-selected_features = selector.get_support(indices=True)
+st.title("Prediksi Churn Pelanggan")
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+# Input fitur
+tenure = st.number_input("Tenure (bulan)", min_value=0, max_value=100, value=12)
 
-@app.route('/predict', methods=['POST'])
-def predict():
-    if 'file' not in request.files:
-        return "No file uploaded"
-    file = request.files['file']
-    df = pd.read_csv(file)
+# Pilihan 3 kategori untuk fitur biner + no service
+online_security = st.selectbox("OnlineSecurity", ["Yes", "No", "No internet service"])
+tech_support = st.selectbox("TechSupport", ["Yes", "No", "No internet service"])
 
-    # Ambil fitur terpilih dan normalisasi
-    X = df.iloc[:, selected_features]
-    X_scaled = scaler.transform(X)
+# Mapping sesuai encoding model: 0=No, 1=Yes, 2=No internet service
+mapping = {"No": 0, "Yes": 1, "No internet service": 2}
+online_security_val = mapping[online_security]
+tech_support_val = mapping[tech_support]
+
+# Tombol prediksi
+if st.button("Predict"):
+    # Buat array input
+    features = np.array([[tenure, online_security_val, tech_support_val]])
+
+    # Scaling
+    features_scaled = scaler.transform(features)
 
     # Prediksi
-    df['Churn_Predicted'] = model.predict(X_scaled)
-    df['Churn_Probability'] = model.predict_proba(X_scaled)[:,1]
+    prediction = model.predict(features_scaled)[0]
+    proba = model.predict_proba(features_scaled)[0]
 
-    # Export Excel
-    output_file = 'Churn_Prediction.xlsx'
-    df.to_excel(output_file, index=False)
+    # Map label
+    label_map = {0: "Tidak Churn", 1: "Churn"}
+    pred_label = label_map[prediction]
 
-    return send_file(output_file, as_attachment=True)
+    st.write(f"**Prediksi:** {pred_label}")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+    # Probabilitas
+    proba_df = pd.DataFrame({
+        "Kelas": [label_map[0], label_map[1]],
+        "Probabilitas (%)": [proba[0]*100, proba[1]*100]
+    })
+    st.bar_chart(proba_df.set_index("Kelas"))
+
+    # Hasil lengkap untuk download
+    result_df = pd.DataFrame({
+        "Tenure": [tenure],
+        "OnlineSecurity": [online_security],
+        "TechSupport": [tech_support],
+        "Prediksi": [pred_label],
+        "Probabilitas Tidak Churn (%)": [proba[0]*100],
+        "Probabilitas Churn (%)": [proba[1]*100]
+    })
+
+    st.write(result_df)
