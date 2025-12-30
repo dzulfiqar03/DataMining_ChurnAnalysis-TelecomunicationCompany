@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Churn Prediction</title>
+</head>
+<body>
+    <h2>Churn Prediction Upload CSV</h2>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <button type="submit">Predict & Download Excel</button>
+    </form>
+    <p>Upload CSV dengan kolom sesuai fitur model.</p>
+</body>
+</html>
