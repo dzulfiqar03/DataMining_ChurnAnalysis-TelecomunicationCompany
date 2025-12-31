@@ -59,22 +59,22 @@
 
                 <div class="grid grid-cols-1 p-3 lg:grid-cols-3 gap-6">
                     <div class="flex items-center gap-2 bg-blue-500/20 p-3 rounded-lg border border-blue-500/50">
-                        <span class="text-blue-400">👤</span>
-                        <span id="tenure-container" class="text-white text-sm font-medium">
+                        
+                        <span id="tenure-container" class="text-black text-sm font-medium">
                             Tenure Terakhir: <b id="tenure-value">{{ $tenure ?? 0 }}</b>
                         </span>
                     </div>
 
                     <div class="flex items-center gap-2 bg-blue-500/20 p-3 rounded-lg border border-blue-500/50">
-                        <span class="text-blue-400">👤</span>
-                        <span id="tenure-container" class="text-white text-sm font-medium">
+                        
+                        <span id="tenure-container" class="text-black text-sm font-medium">
                             online secure Terakhir: <b id="onsec-value">{{ $online_security ?? "" }}</b>
                         </span>
                     </div>
 
                      <div class="flex items-center gap-2 bg-blue-500/20 p-3 rounded-lg border border-blue-500/50">
-                        <span class="text-blue-400">👤</span>
-                        <span id="tenure-container" class="text-white text-sm font-medium">
+                        
+                        <span id="tenure-container" class="text-black text-sm font-medium">
                             Tech Support Terakhir: <b id="tech-value">{{ $tech_support ?? "" }}</b>
                         </span>
                     </div>
@@ -82,15 +82,15 @@
 
                 <div class="grid grid-cols-1 p-3 lg:grid-cols-2 gap-6">
                     <div class="flex items-center gap-2 bg-blue-500/20 p-3 rounded-lg border border-blue-500/50">
-                        <span class="text-blue-400">👤</span>
-                        <span id="tenure-container" class="text-white text-sm font-medium">
+                        
+                        <span id="tenure-container" class="text-black text-sm font-medium">
                             Hasil Prediksi: <b id="predict-value">{{ $prediction ?? "" }}</b>
                         </span>
                     </div>
 
                     <div class="flex items-center gap-2 bg-blue-500/20 p-3 rounded-lg border border-blue-500/50">
-                        <span class="text-blue-400">👤</span>
-                        <span id="tenure-container" class="text-white text-sm font-medium">
+                        
+                        <span id="tenure-container" class="text-black text-sm font-medium">
                             Hasil Klaster <b id="claster-value">{{ $cluster ?? "" }}</b>
                         </span>
                     </div>
@@ -98,8 +98,8 @@
                   
                 </div>
 
-                <div class="p-6 bg-[#111827] flex-grow flex flex-col justify-center min-h-[300px]">
-                    <h3 class="text-white mb-4 text-center text-sm font-bold">Distribusi Pelanggan per Cluster</h3>
+                <div class="p-6 bg-gray-100 flex-grow flex flex-col justify-center min-h-[300px]">
+                    <h3 class=" mb-4 text-center text-sm text-black font-bold">Distribusi Pelanggan per Cluster</h3>
                     <div class="relative h-[250px] w-full">
                         <canvas id="clusterChart"></canvas>
                     </div>
@@ -148,7 +148,7 @@
                                                 display: true,
                                                 position: 'bottom',
                                                 labels: {
-                                                    color: '#94a3b8',
+                                                    color: '#111827',
                                                     usePointStyle: true,
                                                     padding: 20,
                                                     font: {
