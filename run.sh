@@ -7,6 +7,10 @@ echo "Menjalankan Frontend Service di http://localhost:8000 ..."
 
 echo "Menjalankan Streamlit app.py"
 
+(streamlit run dashboard.py)  > /dev/null 2>&1 &
+
+echo "Menjalankan Streamlit dashboard.py"
+
 # Selesai menjalankan semua layanan
 echo "Semua layanan telah dijalankan."
 

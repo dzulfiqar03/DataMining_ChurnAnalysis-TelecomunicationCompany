@@ -28,9 +28,22 @@
                 </div>
                 <h1 class="text-xl font-bold text-slate-800 tracking-tight">{{ $title }}</h1>
             </div>
-            <div class="text-sm text-slate-500 font-medium bg-slate-100 px-4 py-1.5 rounded-full">
-                Last Sync: {{ now()->format('H:i') }}
+            <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-2 gap-5">
+                    <div class="text-sm bg-red-300 text-black font-medium  px-4 py-1.5 rounded-full">
+                        <a href="{{ route('home') }}">Home</a>
+                    </div>
+                    <div class="text-sm text-slate-500 font-medium bg-slate-100 px-4 py-1.5 rounded-full">
+                        <a href="{{ route('dashboard') }}">Dashboard</a>
+                    </div>
+                </div>
+
+                <div class="text-sm text-slate-500 font-medium bg-slate-100 px-4 py-1.5 rounded-full">
+                    Last Sync: {{ now() }}
+                </div>
+
             </div>
+
         </div>
     </nav>
 
@@ -59,43 +72,43 @@
 
                 <div class="grid grid-cols-1 p-3 lg:grid-cols-3 gap-6">
                     <div class="flex items-center gap-2 bg-blue-500/20 p-3 rounded-lg border border-blue-500/50">
-                        
+
                         <span id="tenure-container" class="text-black text-sm font-medium">
                             Tenure Terakhir: <b id="tenure-value">{{ $tenure ?? 0 }}</b>
                         </span>
                     </div>
 
                     <div class="flex items-center gap-2 bg-blue-500/20 p-3 rounded-lg border border-blue-500/50">
-                        
+
                         <span id="tenure-container" class="text-black text-sm font-medium">
-                            online secure Terakhir: <b id="onsec-value">{{ $online_security ?? "" }}</b>
+                            online secure Terakhir: <b id="onsec-value">{{ $online_security ?? '' }}</b>
                         </span>
                     </div>
 
-                     <div class="flex items-center gap-2 bg-blue-500/20 p-3 rounded-lg border border-blue-500/50">
-                        
+                    <div class="flex items-center gap-2 bg-blue-500/20 p-3 rounded-lg border border-blue-500/50">
+
                         <span id="tenure-container" class="text-black text-sm font-medium">
-                            Tech Support Terakhir: <b id="tech-value">{{ $tech_support ?? "" }}</b>
+                            Tech Support Terakhir: <b id="tech-value">{{ $tech_support ?? '' }}</b>
                         </span>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 p-3 lg:grid-cols-2 gap-6">
                     <div class="flex items-center gap-2 bg-blue-500/20 p-3 rounded-lg border border-blue-500/50">
-                        
+
                         <span id="tenure-container" class="text-black text-sm font-medium">
-                            Hasil Prediksi: <b id="predict-value">{{ $prediction ?? "" }}</b>
+                            Hasil Prediksi: <b id="predict-value">{{ $prediction ?? '' }}</b>
                         </span>
                     </div>
 
                     <div class="flex items-center gap-2 bg-blue-500/20 p-3 rounded-lg border border-blue-500/50">
-                        
+
                         <span id="tenure-container" class="text-black text-sm font-medium">
-                            Hasil Klaster <b id="claster-value">{{ $cluster ?? "" }}</b>
+                            Hasil Klaster <b id="claster-value">{{ $cluster ?? '' }}</b>
                         </span>
                     </div>
 
-                  
+
                 </div>
 
                 <div class="p-6 bg-gray-100 flex-grow flex flex-col justify-center min-h-[300px]">
@@ -333,20 +346,19 @@
 
 
     <script>
+        setInterval(() => {
+            fetch('/api/cluster-summary2')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('tenure-value').innerText = data.tenure;
+                    document.getElementById('onsec-value').innerText = data.online_security;
+                    document.getElementById('tech-value').innerText = data.tech_support;
+                    document.getElementById('prediction').innerText = data.prediction;
+                    document.getElementById('claster').innerText = data.cluster;
 
-         setInterval(() => {
-                fetch('/api/cluster-summary2')
-                    .then(res => res.json())
-                    .then(data => {
-                        document.getElementById('tenure-value').innerText = data.tenure;
-                        document.getElementById('onsec-value').innerText = data.online_security;
-                        document.getElementById('tech-value').innerText = data.tech_support;
-                        document.getElementById('prediction').innerText = data.prediction;
-                        document.getElementById('claster').innerText = data.cluster;
 
-                      
-                    });
-            }, 2000);
+                });
+        }, 2000);
         $(document).ready(function() {
 
 

@@ -10,4 +10,8 @@ Route::get('/', function () {
 
 Route::get('/home', [PredictedController::class, 'index']);
 
+Route::get('/dashboard', function(){
+    return view('dashboard');
+})->name('dashboard');
+
 Route::redirect('/', '/home')->name('home');
