@@ -3,11 +3,11 @@
 
 echo "Menjalankan Frontend Service di http://localhost:8000 ..."
 
-(streamlit run app.py)  > /dev/null 2>&1 &
+(streamlit run app.py --server.port=8501)  > /dev/null 2>&1 &
 
 echo "Menjalankan Streamlit app.py"
 
-(streamlit run dashboard.py)  > /dev/null 2>&1 &
+(streamlit run dashboard.py --server.port=8502)  > /dev/null 2>&1 &
 
 echo "Menjalankan Streamlit dashboard.py"
 
