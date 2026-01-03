@@ -10,6 +10,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/data-sensor', action: [DataSenderController::class, 'index']);
+Route::get('/getChurn', action: [DataController::class, 'getAll']);
 
 Route::apiResource('predicted', DataSenderController::class);
 // routes/api.php

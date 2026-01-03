@@ -3,10 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Predicted;
 use Illuminate\Http\Request;
 
 class DataController extends Controller
 {
+    public function getAll()
+    {
+        $getData = Predicted::with('predicted_result')->get();
+        return [
+            'Data' => $getData,
+        ];
+    }
     public function store(Request $request)
     {
         cache()->put('cluster_data', $request->cluster_summary, now()->addMinutes(60));
@@ -21,5 +29,4 @@ class DataController extends Controller
 
         return response()->json(['status' => 'ok']);
     }
-    
 }
