@@ -1,0 +1,27 @@
+type Query {
+    data: Churn @field(resolver: "App\\GraphQL\\Resolver\\ChurnResolver@getAll")
+    datas(id: ID!): ChurnData
+        @field(resolver: "App\\GraphQL\\Resolver\\ChurnResolver@getByID")
+}
+
+type Churn {
+    dataList: [ChurnData!]!
+}
+
+type ChurnData {
+    id: ID!
+    name: String
+    tenure: Int
+    online_security: String
+    tech_support: String
+    predicted_result: [ChurnResult]
+}
+
+type ChurnResult {
+    id: ID
+    id_nama: Int
+    cluster: Int
+    prediction: String
+    probability_no_churn: String
+    probability_churn: String
+}
